@@ -6,9 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
-import toong.vn.androidviewpagerskeleton.fragment.FragmentContainer;
+
+import toong.vn.androidviewpagerskeleton.fragment.ContainerFragment;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager mPager;
@@ -20,14 +22,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = findViewById(R.id.pager);
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
-        mPagerAdapter.addFragment(FragmentContainer.newInstance(1));
-        mPagerAdapter.addFragment(FragmentContainer.newInstance(2));
-        mPagerAdapter.addFragment(FragmentContainer.newInstance(3));
-        mPagerAdapter.addFragment(FragmentContainer.newInstance(4));
-        mPagerAdapter.addFragment(FragmentContainer.newInstance(5));
+        mPagerAdapter.addFragment(ContainerFragment.newInstance(1));
+        mPagerAdapter.addFragment(ContainerFragment.newInstance(2));
+        mPagerAdapter.addFragment(ContainerFragment.newInstance(3));
+        mPagerAdapter.addFragment(ContainerFragment.newInstance(4));
+        mPagerAdapter.addFragment(ContainerFragment.newInstance(5));
 
         mPager.setOffscreenPageLimit(mPagerAdapter.getCount());
         mPager.setAdapter(mPagerAdapter);
@@ -53,5 +55,28 @@ public class MainActivity extends AppCompatActivity {
         public void addFragment(Fragment fragment) {
             mFragmentList.add(fragment);
         }
+
+        public Fragment getCurrentFragment(int currentPos) {
+            return mFragmentList.get(currentPos);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mPagerAdapter == null) {
+            return;
+        }
+        if (mPagerAdapter instanceof PagerAdapter) {
+            Fragment currentFragment =
+                    ((PagerAdapter) mPagerAdapter).getCurrentFragment(mPager.getCurrentItem());
+            if (currentFragment instanceof ContainerFragment) {
+                // Main Fragment is hide, handle back press at child fragment on ViewPager
+                ContainerFragment container = (ContainerFragment) currentFragment;
+                if (container.onBackPressed()) {
+                    return;
+                }
+            }
+        }
+        super.onBackPressed();
     }
 }

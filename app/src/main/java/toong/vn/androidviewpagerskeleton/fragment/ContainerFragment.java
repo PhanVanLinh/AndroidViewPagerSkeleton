@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import toong.vn.androidviewpagerskeleton.R;
 import toong.vn.androidviewpagerskeleton.screen.s1.Fragment1;
 import toong.vn.androidviewpagerskeleton.screen.s2.Fragment2;
@@ -19,14 +20,15 @@ import toong.vn.androidviewpagerskeleton.screen.s5.Fragment5;
  * phanvanlinh.94vn@gmail.com
  */
 
-public class FragmentContainer extends FragmentHelpLoadDataWhenVisible {
+public class ContainerFragment extends BaseFragment {
+    private boolean mUserVisibleHint;
     private int mTabPosition;
     public static String ARGUMENT_CHILD_FRAGMENT = "child_fragment";
 
-    public static FragmentContainer newInstance(int tabPosition) {
+    public static ContainerFragment newInstance(int tabPosition) {
         Bundle bundle = new Bundle();
         bundle.putInt(ARGUMENT_CHILD_FRAGMENT, tabPosition);
-        FragmentContainer baseFrag = new FragmentContainer();
+        ContainerFragment baseFrag = new ContainerFragment();
         baseFrag.setArguments(bundle);
         baseFrag.TAG += "" + tabPosition;
         return baseFrag;
@@ -36,6 +38,7 @@ public class FragmentContainer extends FragmentHelpLoadDataWhenVisible {
     public void onAttach(Context context) {
         super.onAttach(context);
         mTabPosition = getArguments().getInt(ARGUMENT_CHILD_FRAGMENT);
+
         switch (mTabPosition) {
             case 1:
                 goNextChildFragmentWithoutAddToBackStack(new Fragment1());
@@ -69,24 +72,28 @@ public class FragmentContainer extends FragmentHelpLoadDataWhenVisible {
                 .commit();
     }
 
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//        if (!isAdded()) {
-//            return;
-//        }
-//        Fragment curFragment =
-//                getChildFragmentManager().findFragmentById(R.id.frame_container);
-//        curFragment.setUserVisibleHint(isVisibleToUser);
-//    }
-
     @Override
-    public void onVisible() {
-        super.onVisible();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        mUserVisibleHint = isVisibleToUser;
         if (!isAdded()) {
             return;
         }
-        Fragment curFragment = getChildFragmentManager().findFragmentById(R.id.frame_container);
-        ((BaseFragment) curFragment).onVisible();
+        Fragment fragment = getChildFragmentManager().findFragmentById(R.id.frame_container);
+        if (fragment != null) {
+            fragment.setUserVisibleHint(isVisibleToUser);
+        }
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+        return mUserVisibleHint;
+    }
+
+    public boolean onBackPressed() {
+        ChildContainerFragment fragment =
+                (ChildContainerFragment) getChildFragmentManager().findFragmentById(
+                        R.id.frame_container);
+        return fragment.onBackPressed();
     }
 }

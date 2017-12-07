@@ -5,10 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import toong.vn.androidviewpagerskeleton.R;
-import toong.vn.androidviewpagerskeleton.fragment.BaseFragment;
 
-public class Fragment3b extends BaseFragment {
+import toong.vn.androidviewpagerskeleton.R;
+import toong.vn.androidviewpagerskeleton.fragment.SubChildContainerFragment;
+
+public class Fragment3b extends SubChildContainerFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

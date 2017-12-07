@@ -1,4 +1,4 @@
-package toong.vn.androidviewpagerskeleton.screen.s1;
+package toong.vn.androidviewpagerskeleton.screen.s3;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,19 +8,20 @@ import android.view.ViewGroup;
 
 import toong.vn.androidviewpagerskeleton.R;
 import toong.vn.androidviewpagerskeleton.fragment.ChildContainerFragment;
+import toong.vn.androidviewpagerskeleton.screen.s1.Fragment1sub2;
 
 /**
  * Created by PhanVanLinh on 06/12/2017.
  * phanvanlinh.94vn@gmail.com
  */
 
-public class Fragment1sub1 extends ChildContainerFragment {
+public class Fragment3aSub1 extends ChildContainerFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
-        View rootView = inflater.inflate(R.layout.fragment_1_sub1, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_3asub1, container, false);
         rootView.findViewById(R.id.button_go_to_sub_2)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -48,6 +49,6 @@ public class Fragment1sub1 extends ChildContainerFragment {
 
     @Override
     public boolean onBackPressed() {
-        return getParentFragment().getChildFragmentManager().popBackStackImmediate();
+        return false;
     }
 }

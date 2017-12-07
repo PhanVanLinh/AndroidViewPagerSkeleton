@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 import toong.vn.androidviewpagerskeleton.R;
-import toong.vn.androidviewpagerskeleton.fragment.BaseFragment;
+import toong.vn.androidviewpagerskeleton.fragment.ChildContainerFragment;
 
-public class Fragment3 extends BaseFragment {
+public class Fragment3 extends ChildContainerFragment {
     ViewPager mPager;
     PagerAdapter mPagerAdapter;
 
@@ -23,6 +23,12 @@ public class Fragment3 extends BaseFragment {
             Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_3, container, false);
+        rootView.findViewById(R.id.go_to_3_sub_1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goTo3Sub1AndAddToBackStack();
+            }
+        });
 
         mPager = (ViewPager) rootView.findViewById(R.id.pager);
         mPagerAdapter = new PagerAdapter(getChildFragmentManager());
@@ -30,27 +36,25 @@ public class Fragment3 extends BaseFragment {
         mPagerAdapter.addFragment(new Fragment3a());
         mPagerAdapter.addFragment(new Fragment3b());
         mPagerAdapter.addFragment(new Fragment3c());
-
         mPager.setAdapter(mPagerAdapter);
         return rootView;
     }
 
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//        if (mPager == null) {
-//            return;
-//        }
-//        Fragment selectedFragment = mPagerAdapter.getItem(mPager.getCurrentItem());
-//        if (selectedFragment == null) {
-//            return;
-//        }
-//        selectedFragment.setUserVisibleHint(isVisibleToUser);
-//    }
+    private void goTo3Sub1AndAddToBackStack() {
+//        getChildFragmentManager().beginTransaction()
+//                .replace(R.id.frame_3_container, new Fragment3sub1())
+//                .addToBackStack("")
+//                .commit();
+
+        getParentFragment().getChildFragmentManager().beginTransaction()
+                .add(R.id.frame_container, new Fragment3sub1())
+                .addToBackStack("")
+                .commit();
+    }
 
     @Override
-    public void onVisible() {
-        super.onVisible();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
         if (mPager == null) {
             return;
         }
@@ -58,7 +62,7 @@ public class Fragment3 extends BaseFragment {
         if (selectedFragment == null) {
             return;
         }
-        ((BaseFragment) selectedFragment).onVisible();
+        selectedFragment.setUserVisibleHint(isVisibleToUser);
     }
 
     @Override
@@ -76,7 +80,7 @@ public class Fragment3 extends BaseFragment {
     private class PagerAdapter extends FragmentStatePagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
 
-        public PagerAdapter(FragmentManager fm) {
+        PagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -90,8 +94,13 @@ public class Fragment3 extends BaseFragment {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment) {
+        void addFragment(Fragment fragment) {
             mFragmentList.add(fragment);
         }
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
     }
 }

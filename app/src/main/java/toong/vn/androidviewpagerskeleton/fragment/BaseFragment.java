@@ -53,10 +53,4 @@ public class BaseFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         Log.i(TAG, "setUserVisibleHint " + isVisibleToUser + " - " + isResumed());
     }
-
-    public void onVisible() {
-        Log.i(TAG, "-----");
-        Log.i(TAG, "FRAGMENT VISIBLE");
-        Log.i(TAG, "-----");
-    }
 }
