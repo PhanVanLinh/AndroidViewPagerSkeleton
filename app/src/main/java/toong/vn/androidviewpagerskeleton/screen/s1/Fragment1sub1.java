@@ -1,11 +1,11 @@
 package toong.vn.androidviewpagerskeleton.screen.s1;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import toong.vn.androidviewpagerskeleton.R;
 import toong.vn.androidviewpagerskeleton.fragment.ChildContainerFragment;
 
@@ -15,6 +15,22 @@ import toong.vn.androidviewpagerskeleton.fragment.ChildContainerFragment;
  */
 
 public class Fragment1sub1 extends ChildContainerFragment {
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG, "enter "+getEnterTransition());
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onVisible() {
+        super.onVisible();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +52,12 @@ public class Fragment1sub1 extends ChildContainerFragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG, "onCreateViewCreated");
     }
 
     private void goToSub2AndAddToBackStack() {

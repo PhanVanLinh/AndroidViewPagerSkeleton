@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import toong.vn.androidviewpagerskeleton.R;
 import toong.vn.androidviewpagerskeleton.screen.s1.Fragment1;
 import toong.vn.androidviewpagerskeleton.screen.s2.Fragment2;

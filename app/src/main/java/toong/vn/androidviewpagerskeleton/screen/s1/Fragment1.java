@@ -1,11 +1,11 @@
 package toong.vn.androidviewpagerskeleton.screen.s1;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import toong.vn.androidviewpagerskeleton.R;
 import toong.vn.androidviewpagerskeleton.fragment.ChildContainerFragment;
 
@@ -27,10 +27,11 @@ public class Fragment1 extends ChildContainerFragment {
     }
 
     private void goSub1AndAddToBackStack() {
-        getParentFragment().getChildFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_container, new Fragment1sub1())
-                .addToBackStack("")
+        FragmentTransaction tr = getParentFragment().getChildFragmentManager().beginTransaction();
+//        tr.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
+//                R.anim.slide_right_out);
+
+        tr.replace(R.id.frame_container, new Fragment1sub1()).addToBackStack("")
                 .commit();
     }
 

@@ -22,11 +22,21 @@ public class SubChildContainerFragment extends Fragment {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        onInVisible();
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         userVisibleHint = isVisibleToUser;
-        if (isVisibleToUser && isResumed()) {
-            onVisible();
+        if (isResumed()) {
+            if (isVisibleToUser) {
+                onVisible();
+            } else {
+                onInVisible();
+            }
         }
     }
 
@@ -35,5 +45,11 @@ public class SubChildContainerFragment extends Fragment {
         Log.i(TAG, "FRAGMENT VISIBLE");
         Log.i(TAG, "-----");
         Toast.makeText(getActivity(), "" + TAG + "visible", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onInVisible() {
+        Log.i(TAG, "-----");
+        Log.i(TAG, "FRAGMENT IN VISIBLE");
+        Log.i(TAG, "-----");
     }
 }
