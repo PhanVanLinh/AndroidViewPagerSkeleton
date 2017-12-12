@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 public abstract class ChildContainerFragment extends Fragment {
     protected String TAG = getClass().getSimpleName();
-    protected boolean isOnStart;
-    private boolean isCreateAnimation;
+    protected boolean isStarted;
+    private boolean isCreatedAnimation;
 
     @Override
     public Animation onCreateAnimation(int transit, final boolean enter, int nextAnim) {
@@ -26,7 +26,7 @@ public abstract class ChildContainerFragment extends Fragment {
         }
         if (anim == null) {
             if (enter) {
-                isCreateAnimation = true;
+                isCreatedAnimation = true;
                 handleVisible();
             }
             return null;
@@ -43,7 +43,7 @@ public abstract class ChildContainerFragment extends Fragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        isCreateAnimation = true;
+                        isCreatedAnimation = true;
                         handleVisible();
                     }
                 }, 100);
@@ -60,7 +60,7 @@ public abstract class ChildContainerFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        isOnStart = true;
+        isStarted = true;
         Log.i(TAG, "onStart");
         handleVisible();
     }
@@ -87,7 +87,7 @@ public abstract class ChildContainerFragment extends Fragment {
     }
 
     private void handleVisible() {
-        if (!isCreateAnimation || !isOnStart) {
+        if (!isCreatedAnimation || !isStarted) {
             return;
         }
         if (getUserVisibleHint()) {

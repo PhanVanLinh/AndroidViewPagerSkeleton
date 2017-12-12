@@ -29,27 +29,33 @@ public class Fragment3 extends ChildContainerFragment {
                 goTo3Sub1AndAddToBackStack();
             }
         });
-
         mPager = (ViewPager) rootView.findViewById(R.id.pager);
         mPagerAdapter = new PagerAdapter(getChildFragmentManager());
-
-        mPagerAdapter.addFragment(new Fragment3a());
-        mPagerAdapter.addFragment(new Fragment3b());
-        mPagerAdapter.addFragment(new Fragment3c());
-        mPager.setAdapter(mPagerAdapter);
         return rootView;
     }
 
     private void goTo3Sub1AndAddToBackStack() {
-//        getChildFragmentManager().beginTransaction()
-//                .replace(R.id.frame_3_container, new Fragment3sub1())
-//                .addToBackStack("")
-//                .commit();
+        //        getChildFragmentManager().beginTransaction()
+        //                .replace(R.id.frame_3_container, new Fragment3sub1())
+        //                .addToBackStack("")
+        //                .commit();
 
-        getParentFragment().getChildFragmentManager().beginTransaction()
+        getParentFragment().getChildFragmentManager()
+                .beginTransaction()
                 .add(R.id.frame_container, new Fragment3sub1())
                 .addToBackStack("")
                 .commit();
+    }
+
+    @Override
+    public void onVisible() {
+        super.onVisible();
+        if (mPagerAdapter.getCount() == 0) {
+            mPagerAdapter.addFragment(new Fragment3a());
+            mPagerAdapter.addFragment(new Fragment3b());
+            mPagerAdapter.addFragment(new Fragment3c());
+            mPager.setAdapter(mPagerAdapter);
+        }
     }
 
     @Override
