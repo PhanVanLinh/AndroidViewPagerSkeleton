@@ -14,10 +14,10 @@
         />
 
     <Button
-        android:id="@+id/button_go_to_3a_sub_1"
+        android:id="@+id/button_go_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to 3a sub 1"
+        android:text="Go back"
         />
 
 </LinearLayout>
