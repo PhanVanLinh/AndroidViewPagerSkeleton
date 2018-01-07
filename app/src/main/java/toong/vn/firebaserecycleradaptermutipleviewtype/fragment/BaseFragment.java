@@ -1,8 +1,11 @@
 package toong.vn.firebaserecycleradaptermutipleviewtype.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
 
 public class BaseFragment extends Fragment {
     protected String TAG = getClass().getSimpleName();
@@ -11,6 +14,12 @@ public class BaseFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         Log.i(TAG, "onAttach");
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG, "onViewCreated");
     }
 
     @Override

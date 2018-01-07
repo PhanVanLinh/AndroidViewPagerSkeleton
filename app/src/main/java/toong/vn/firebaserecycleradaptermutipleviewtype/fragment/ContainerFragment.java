@@ -1,12 +1,17 @@
 package toong.vn.firebaserecycleradaptermutipleviewtype.fragment;
 
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 import toong.vn.firebaserecycleradaptermutipleviewtype.R;
 import toong.vn.firebaserecycleradaptermutipleviewtype.screen.s1.Fragment1;
 import toong.vn.firebaserecycleradaptermutipleviewtype.screen.s2.Fragment2;
@@ -20,9 +25,9 @@ import toong.vn.firebaserecycleradaptermutipleviewtype.screen.s5.Fragment5;
  */
 
 public class ContainerFragment extends BaseFragment {
-    private boolean mUserVisibleHint;
     private int mTabPosition;
     public static String ARGUMENT_CHILD_FRAGMENT = "child_fragment";
+    private Queue<Boolean> pendingVisible = new ArrayDeque<>();
 
     public static ContainerFragment newInstance(int tabPosition) {
         Bundle bundle = new Bundle();
@@ -59,10 +64,20 @@ public class ContainerFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_container, container, false);
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Fragment fragment = getChildFragmentManager().findFragmentById(R.id.frame_container);
+        Log.i(TAG, "pendingVisible size" + pendingVisible.size());
+        while (!pendingVisible.isEmpty()) {
+            fragment.setUserVisibleHint(pendingVisible.poll());
+        }
     }
 
     private void goNextChildFragmentWithoutAddToBackStack(Fragment fragment) {
@@ -74,19 +89,12 @@ public class ContainerFragment extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        mUserVisibleHint = isVisibleToUser;
         if (!isAdded()) {
+            pendingVisible.add(isVisibleToUser);
             return;
         }
         Fragment fragment = getChildFragmentManager().findFragmentById(R.id.frame_container);
-        if (fragment != null) {
-            fragment.setUserVisibleHint(isVisibleToUser);
-        }
-    }
-
-    @Override
-    public boolean getUserVisibleHint() {
-        return mUserVisibleHint;
+        fragment.setUserVisibleHint(isVisibleToUser);
     }
 
     public boolean onBackPressed() {

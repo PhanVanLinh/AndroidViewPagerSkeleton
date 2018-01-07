@@ -5,14 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import toong.vn.firebaserecycleradaptermutipleviewtype.R;
-import toong.vn.firebaserecycleradaptermutipleviewtype.fragment.SubChildContainerFragment;
 
-public class Fragment3a extends SubChildContainerFragment {
+import toong.vn.firebaserecycleradaptermutipleviewtype.R;
+import toong.vn.firebaserecycleradaptermutipleviewtype.fragment.ChildContainerFragment;
+
+public class Fragment3a extends ChildContainerFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_3a, container, false);
         rootView.findViewById(R.id.button_go_to_3a_sub_1)
@@ -32,5 +33,10 @@ public class Fragment3a extends SubChildContainerFragment {
                 .replace(R.id.frame_container, new Fragment3aSub1())
                 .addToBackStack("")
                 .commit();
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
     }
 }

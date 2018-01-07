@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import toong.vn.firebaserecycleradaptermutipleviewtype.R;
 import toong.vn.firebaserecycleradaptermutipleviewtype.fragment.ChildContainerFragment;
 
@@ -20,7 +22,7 @@ public class Fragment3 extends ChildContainerFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_3, container, false);
         rootView.findViewById(R.id.go_to_3_sub_1).setOnClickListener(new View.OnClickListener() {
@@ -31,6 +33,7 @@ public class Fragment3 extends ChildContainerFragment {
         });
         mPager = rootView.findViewById(R.id.pager);
         mPagerAdapter = new PagerAdapter(getChildFragmentManager());
+
         return rootView;
     }
 
@@ -50,6 +53,10 @@ public class Fragment3 extends ChildContainerFragment {
     @Override
     public void onVisible() {
         super.onVisible();
+        initViewPager();
+    }
+
+    private void initViewPager() {
         if (mPagerAdapter.getCount() == 0) {
             mPagerAdapter.addFragment(new Fragment3a());
             mPagerAdapter.addFragment(new Fragment3b());
@@ -61,13 +68,10 @@ public class Fragment3 extends ChildContainerFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (mPager == null) {
+        if (mPagerAdapter == null || mPagerAdapter.getCount() == 0) {
             return;
         }
         Fragment selectedFragment = mPagerAdapter.getItem(mPager.getCurrentItem());
-        if (selectedFragment == null) {
-            return;
-        }
         selectedFragment.setUserVisibleHint(isVisibleToUser);
     }
 

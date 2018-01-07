@@ -30,10 +30,6 @@ dependencies {
 //  compile 'com.android.support:appcompat-v7:24.2.1'
 //  compile 'com.android.support:design:24.2.1'
 //  compile 'com.android.support.constraint:constraint-layout:1.0.2'
-  compile ('com.google.android.gms:play-services-location:11.0.1'){
-    exclude group: 'com.android.support', module: 'support-v4'
-    exclude group: 'com.google.android.gms', module: 'play-services-basement'
-  }
 
 }
 apply plugin: 'com.google.gms.google-services'

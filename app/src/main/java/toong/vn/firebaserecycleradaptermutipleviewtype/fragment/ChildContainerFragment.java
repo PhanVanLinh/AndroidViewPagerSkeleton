@@ -17,6 +17,8 @@ public abstract class ChildContainerFragment extends BaseFragment {
     protected String TAG = getClass().getSimpleName();
     protected boolean isStarted;
     private boolean isCreatedAnimation;
+    private Boolean isVisibleToUser;
+    private boolean isFirstVisible;
 
     @Override
     public Animation onCreateAnimation(int transit, final boolean enter, int nextAnim) {
@@ -61,7 +63,6 @@ public abstract class ChildContainerFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG, "onViewCreated");
         isCreatedAnimation = false;
     }
 
@@ -79,13 +80,9 @@ public abstract class ChildContainerFragment extends BaseFragment {
     }
 
     @Override
-    public boolean getUserVisibleHint() {
-        return getParentFragment().getUserVisibleHint();
-    }
-
-    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
         handleVisible();
         if (isResumed() && !isVisibleToUser) {
             onInVisible();
@@ -96,15 +93,22 @@ public abstract class ChildContainerFragment extends BaseFragment {
         if (!isCreatedAnimation || !isStarted) {
             return;
         }
-        if (getUserVisibleHint()) {
+        if (isVisibleToUser != null && isVisibleToUser) {
             onVisible();
         }
+    }
+
+    public void onFirstVisible(){
+        isFirstVisible = true;
     }
 
     public void onVisible() {
         Log.i(TAG, "-----");
         Log.i(TAG, "VISIBLE");
         Log.i(TAG, "-----");
+        if(!isFirstVisible){
+            onFirstVisible();
+        }
     }
 
     public void onInVisible() {

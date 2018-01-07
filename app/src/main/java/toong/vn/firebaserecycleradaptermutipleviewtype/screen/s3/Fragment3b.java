@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import toong.vn.firebaserecycleradaptermutipleviewtype.R;
-import toong.vn.firebaserecycleradaptermutipleviewtype.fragment.SubChildContainerFragment;
+import toong.vn.firebaserecycleradaptermutipleviewtype.fragment.ChildContainerFragment;
 
-public class Fragment3b extends SubChildContainerFragment {
+public class Fragment3b extends ChildContainerFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -17,5 +17,10 @@ public class Fragment3b extends SubChildContainerFragment {
         Log.i(TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_3b, container, false);
         return rootView;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
     }
 }
